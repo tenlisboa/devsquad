@@ -23,9 +23,9 @@
                                             
                                             <div class="list-group-item wrapper" >
                                                 <ul class="list-group ">
-                                                    <li v-for="(task, index) in todo" :key="task.name" class="list-group-item align-horizontal task">  
-                                                        <label v-on:click="comfirmDelete(task.name, 'todo', index)" class="label-task">{{ task.name }}</label>
-                                                        <button v-on:click="moveToDoing(task.name, 'todo', index)" class="btn btn" style="float: right"><i class="fas fa-angle-right"></i></button>             
+                                                    <li v-for="(task, index) in todo" :key="task.id" class="list-group-item align-horizontal task">  
+                                                        <label v-on:click="comfirmDelete(task.name_task, 'todo', index)" class="label-task">{{ task.name_task }}</label>
+                                                        <button v-on:click="moveToDoing(task.name_task, 'todo', index)" class="btn btn" style="float: right"><i class="fas fa-angle-right"></i></button>             
                                                     </li>
                                                 </ul>
                                             </div>
@@ -49,10 +49,10 @@
                                             
                                             <div class="list-group-item wrapper" >
                                                 <ul class="list-group ">
-                                                    <li v-for="(task, index) in doing" :key="task.name" class="list-group-item align-horizontal task">  
-                                                        <button v-on:click="moveToDo(task.name, 'doing', index)" class="btn btn" style="float: left"><i class="fas fa-angle-left"></i></button>             
-                                                        <label v-on:click="comfirmDelete(task.name, 'doing', index)" class="label-task">{{ task.name }}</label>
-                                                        <button v-on:click="moveToFinished(task.name, 'doing', index)" class="btn btn" style="float: right"><i class="fas fa-angle-right"></i></button>             
+                                                    <li v-for="(task, index) in doing" :key="task.id" class="list-group-item align-horizontal task">  
+                                                        <button v-on:click="moveToDo(task.name_task, 'doing', index)" class="btn btn" style="float: left"><i class="fas fa-angle-left"></i></button>             
+                                                        <label v-on:click="comfirmDelete(task.name_task, 'doing', index)" class="label-task">{{ task.name_task }}</label>
+                                                        <button v-on:click="moveToFinished(task.name_task, 'doing', index)" class="btn btn" style="float: right"><i class="fas fa-angle-right"></i></button>             
                                                     </li>
                                                 </ul>
                                             </div>
@@ -76,9 +76,9 @@
                                             
                                             <div class="list-group-item wrapper" >
                                                 <ul class="list-group ">
-                                                    <li v-for="(task, index) in finished" :key="task.name" class="list-group-item align-horizontal task">  
-                                                        <button v-on:click="moveToDoing(task.name, 'finished', index)" class="btn btn" style="float: left"><i class="fas fa-angle-left"></i></button>             
-                                                        <label v-on:click="comfirmDelete(task.name, 'finished', index)" class="label-task">{{ task.name }}</label>
+                                                    <li v-for="(task, index) in finished" :key="task.id" class="list-group-item align-horizontal task">  
+                                                        <button v-on:click="moveToDoing(task.name_task, 'finished', index)" class="btn btn" style="float: left"><i class="fas fa-angle-left"></i></button>             
+                                                        <label v-on:click="comfirmDelete(task.name_task, 'finished', index)" class="label-task">{{ task.name_task }}</label>
                                                     </li>
                                                 </ul>
                                             </div>
@@ -96,25 +96,53 @@
 
 <script>
     export default {
+
+        mounted() {
+
+            this.todo = this.dados.task_todo;
+            this.doing = this.dados.task_doing;
+            this.finished = this.dados.task_finished;
+            this.idUser = this.dados.id_user;
+
+        },
+
+        props: ['dados'],
+
+        data: function() {
+            return {
+                todo: [],
+                doing: [],
+                finished: [],
+                new_task_todo: '',
+                new_task_doing: '',
+                new_task_finished: '',
+            }
+        },
+
         methods:{
+
             addTaskTodo: function() {
                 if(this.new_task_todo != ''){
-                    this.todo.push({name: this.new_task_todo});
+                    this.todo.push({name_task: this.new_task_todo});
                 }
+
                 this.new_task_todo = '';     
             },
+
             addTaskDoing: function() {
                 if(this.new_task_doing != ''){
-                    this.doing.push({name: this.new_task_doing});
+                    this.doing.push({name_task: this.new_task_doing});
                 }
                 this.new_task_doing = '';     
             },
+
             addTaskFinished: function() {
                 if(this.new_task_finished != ''){
-                    this.finished.push({name: this.new_task_finished});
+                    this.finished.push({name_task: this.new_task_finished});
                 }
                 this.new_task_finished = '';     
             },
+
             deleteTask: function(task, type, index) {
                 switch(type){
                     case 'todo': 
@@ -130,24 +158,28 @@
                         break;
                 }
             },
+
             moveToDo: function(task, type, index) {
                 this.deleteTask(task,type,index);
-                this.new_task_todo = task.toString();
+                this.new_task_todo = task;
                 this.addTaskTodo();
                 this.new_task_todo = '';
             },
+
             moveToDoing: function(task, type, index) {
                 this.deleteTask(task, type, index);
-                this.new_task_doing = task.toString();
+                this.new_task_doing = task;
                 this.addTaskDoing();
                 this.new_task_doing = '';
             },
+
             moveToFinished: function(task, type, index) {
                 this.deleteTask(task, type, index);
-                this.new_task_finished = task.toString();
+                this.new_task_finished = task;
                 this.addTaskFinished();
                 this.new_task_finished = '';
             },
+
             comfirmDelete: function(task, type, index) {
                 swal({
                     title: "Tem certeza que deseja finalizar esta tarefa?",
@@ -167,21 +199,5 @@
             }
 
         },
-        data: function() {
-            return {
-                todo: [
-                    {name: 'UM'},
-                    {name: 'DOIS'},
-                    {name: 'TRES'},
-                    {name: 'QUATRO'},
-                ],
-                doing: [],
-                finished: [],
-                new_task_todo: '',
-                new_task_doing: '',
-                new_task_finished: '',
-            }
-        },
-        props: ['nameTask', 'typeTask'],
     }
 </script>

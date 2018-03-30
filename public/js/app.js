@@ -64910,25 +64910,52 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 
 /* harmony default export */ __webpack_exports__["default"] = ({
+    mounted: function mounted() {
+
+        this.todo = this.dados.task_todo;
+        this.doing = this.dados.task_doing;
+        this.finished = this.dados.task_finished;
+        this.idUser = this.dados.id_user;
+    },
+
+
+    props: ['dados'],
+
+    data: function data() {
+        return {
+            todo: [],
+            doing: [],
+            finished: [],
+            new_task_todo: '',
+            new_task_doing: '',
+            new_task_finished: ''
+        };
+    },
+
     methods: {
+
         addTaskTodo: function addTaskTodo() {
             if (this.new_task_todo != '') {
-                this.todo.push({ name: this.new_task_todo });
+                this.todo.push({ name_task: this.new_task_todo });
             }
+
             this.new_task_todo = '';
         },
+
         addTaskDoing: function addTaskDoing() {
             if (this.new_task_doing != '') {
-                this.doing.push({ name: this.new_task_doing });
+                this.doing.push({ name_task: this.new_task_doing });
             }
             this.new_task_doing = '';
         },
+
         addTaskFinished: function addTaskFinished() {
             if (this.new_task_finished != '') {
-                this.finished.push({ name: this.new_task_finished });
+                this.finished.push({ name_task: this.new_task_finished });
             }
             this.new_task_finished = '';
         },
+
         deleteTask: function deleteTask(task, type, index) {
             switch (type) {
                 case 'todo':
@@ -64944,24 +64971,28 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                     break;
             }
         },
+
         moveToDo: function moveToDo(task, type, index) {
             this.deleteTask(task, type, index);
-            this.new_task_todo = task.toString();
+            this.new_task_todo = task;
             this.addTaskTodo();
             this.new_task_todo = '';
         },
+
         moveToDoing: function moveToDoing(task, type, index) {
             this.deleteTask(task, type, index);
-            this.new_task_doing = task.toString();
+            this.new_task_doing = task;
             this.addTaskDoing();
             this.new_task_doing = '';
         },
+
         moveToFinished: function moveToFinished(task, type, index) {
             this.deleteTask(task, type, index);
-            this.new_task_finished = task.toString();
+            this.new_task_finished = task;
             this.addTaskFinished();
             this.new_task_finished = '';
         },
+
         comfirmDelete: function comfirmDelete(task, type, index) {
             var _this = this;
 
@@ -64981,18 +65012,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             });
         }
 
-    },
-    data: function data() {
-        return {
-            todo: [{ name: 'UM' }, { name: 'DOIS' }, { name: 'TRES' }, { name: 'QUATRO' }],
-            doing: [],
-            finished: [],
-            new_task_todo: '',
-            new_task_doing: '',
-            new_task_finished: ''
-        };
-    },
-    props: ['nameTask', 'typeTask']
+    }
 });
 
 /***/ }),
@@ -65072,7 +65092,7 @@ var render = function() {
                             return _c(
                               "li",
                               {
-                                key: task.name,
+                                key: task.id,
                                 staticClass:
                                   "list-group-item align-horizontal task"
                               },
@@ -65084,14 +65104,14 @@ var render = function() {
                                     on: {
                                       click: function($event) {
                                         _vm.comfirmDelete(
-                                          task.name,
+                                          task.name_task,
                                           "todo",
                                           index
                                         )
                                       }
                                     }
                                   },
-                                  [_vm._v(_vm._s(task.name))]
+                                  [_vm._v(_vm._s(task.name_task))]
                                 ),
                                 _vm._v(" "),
                                 _c(
@@ -65102,7 +65122,7 @@ var render = function() {
                                     on: {
                                       click: function($event) {
                                         _vm.moveToDoing(
-                                          task.name,
+                                          task.name_task,
                                           "todo",
                                           index
                                         )
@@ -65186,7 +65206,7 @@ var render = function() {
                             return _c(
                               "li",
                               {
-                                key: task.name,
+                                key: task.id,
                                 staticClass:
                                   "list-group-item align-horizontal task"
                               },
@@ -65198,7 +65218,11 @@ var render = function() {
                                     staticStyle: { float: "left" },
                                     on: {
                                       click: function($event) {
-                                        _vm.moveToDo(task.name, "doing", index)
+                                        _vm.moveToDo(
+                                          task.name_task,
+                                          "doing",
+                                          index
+                                        )
                                       }
                                     }
                                   },
@@ -65216,14 +65240,14 @@ var render = function() {
                                     on: {
                                       click: function($event) {
                                         _vm.comfirmDelete(
-                                          task.name,
+                                          task.name_task,
                                           "doing",
                                           index
                                         )
                                       }
                                     }
                                   },
-                                  [_vm._v(_vm._s(task.name))]
+                                  [_vm._v(_vm._s(task.name_task))]
                                 ),
                                 _vm._v(" "),
                                 _c(
@@ -65234,7 +65258,7 @@ var render = function() {
                                     on: {
                                       click: function($event) {
                                         _vm.moveToFinished(
-                                          task.name,
+                                          task.name_task,
                                           "doing",
                                           index
                                         )
@@ -65318,7 +65342,7 @@ var render = function() {
                             return _c(
                               "li",
                               {
-                                key: task.name,
+                                key: task.id,
                                 staticClass:
                                   "list-group-item align-horizontal task"
                               },
@@ -65331,7 +65355,7 @@ var render = function() {
                                     on: {
                                       click: function($event) {
                                         _vm.moveToDoing(
-                                          task.name,
+                                          task.name_task,
                                           "finished",
                                           index
                                         )
@@ -65352,14 +65376,14 @@ var render = function() {
                                     on: {
                                       click: function($event) {
                                         _vm.comfirmDelete(
-                                          task.name,
+                                          task.name_task,
                                           "finished",
                                           index
                                         )
                                       }
                                     }
                                   },
-                                  [_vm._v(_vm._s(task.name))]
+                                  [_vm._v(_vm._s(task.name_task))]
                                 )
                               ]
                             )

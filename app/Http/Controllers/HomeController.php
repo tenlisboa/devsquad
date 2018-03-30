@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Auth;
+use Illuminate\Support\Facades\DB;
 
 class HomeController extends Controller
 {
@@ -23,6 +25,13 @@ class HomeController extends Controller
      */
     public function index()
     {
-        return view('home');
+        $idUser = Auth::id();
+        $task_todo = DB::table('tasks')->where('id_user', $idUser)->where('type_task', 'todo')->get();
+        $task_doing = DB::table('tasks')->where('id_user', $idUser)->where('type_task', 'doing')->get();
+        $task_finished = DB::table('tasks')->where('id_user', $idUser)->where('type_task', 'finished')->get();
+        
+        $data = json_encode(['task_todo' => $task_todo, 'task_doing' => $task_doing, 'task_finished' => $task_finished, 'id_user' => $idUser]);
+
+        return view('home')->with('data_sets', $data );
     }
 }
