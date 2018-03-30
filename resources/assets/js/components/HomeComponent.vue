@@ -116,15 +116,35 @@
                 new_task_todo: '',
                 new_task_doing: '',
                 new_task_finished: '',
+                idUser: ''
             }
         },
 
         methods:{
 
+            sendPostData: function(service, id_user, task_name, type_task) {
+
+                let data = new FormData();
+                data.append('service', service)
+                data.append('id_user', id_user);
+                data.append('task_name', task_name);
+                data.append('type_task', type_task);
+
+                axios.post('http://localhost:1234/api', data)
+                    .then( function(res) {
+                        //console.log(res);
+                    })
+                    .catch( function(err) {
+                        //console.log(err);
+                    })
+            },
+
             addTaskTodo: function() {
                 if(this.new_task_todo != ''){
                     this.todo.push({name_task: this.new_task_todo});
                 }
+
+                this.sendPostData('add_task', this.idUser, this.new_task_todo, 'todo');
 
                 this.new_task_todo = '';     
             },
@@ -133,6 +153,9 @@
                 if(this.new_task_doing != ''){
                     this.doing.push({name_task: this.new_task_doing});
                 }
+
+                this.sendPostData('add_task', this.idUser, this.new_task_doing, 'doing');
+
                 this.new_task_doing = '';     
             },
 
@@ -140,6 +163,9 @@
                 if(this.new_task_finished != ''){
                     this.finished.push({name_task: this.new_task_finished});
                 }
+
+                this.sendPostData('add_task', this.idUser, this.new_task_finished, 'finished');
+
                 this.new_task_finished = '';     
             },
 
@@ -156,7 +182,9 @@
                         break; 
                     default: 
                         break;
+
                 }
+                this.sendPostData('delete_task', this.idUser, task, type)
             },
 
             moveToDo: function(task, type, index) {

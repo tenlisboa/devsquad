@@ -32,6 +32,6 @@ class HomeController extends Controller
         
         $data = json_encode(['task_todo' => $task_todo, 'task_doing' => $task_doing, 'task_finished' => $task_finished, 'id_user' => $idUser]);
 
-        return view('home')->with('data_sets', $data );
+        return view('home')->with('datas', $data );
     }
 }
