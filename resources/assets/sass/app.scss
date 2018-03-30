@@ -12,6 +12,11 @@
   background-color: #fff;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.04);
 }
+
+#name-task {
+  text-align: center;
+  font-weight: bold;
+}
 // Set color to white
 .inverse {
   color: #fff;
@@ -25,6 +30,56 @@
   background-color: #2980b9;
 }
 // This is gradient background
-#HeaderPainel {
+.header-painel, .button-add {
   background: linear-gradient(to right, #2980b9ed , #74b9ff);
+}
+
+.list-group-item {
+  overflow: hidden;
+}
+
+.large {
+  size: 3x;
+}
+
+//
+.wrapper {
+  height: 100%;
+  min-height: 100%;
+  display: -webkit-flex;
+  display: flex;
+  -webkit-align-items: center;
+  align-items: center;
+  -webkit-justify-content: center;
+  justify-content: center;
+}
+
+.wrapper div {
+  padding: 40px;
+  border: 1px solid rgba(0, 0, 0, .3)
+}
+
+.align-horizontal {
+  float:left;
+}
+
+li {
+  width: 250px; 
+  text-align: center;
+  font-size: 15px;
+}
+
+.btn:hover {
+  background-color: #2980b9;
+}
+
+.task:hover {
+  background: #74b9ff;
+  cursor: pointer;
+}
+
+.label-task:hover {
+  text-decoration: line-through;
+  color: #c0392b;
+  cursor: pointer;
 }
