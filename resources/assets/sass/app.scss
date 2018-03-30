@@ -12,3 +12,19 @@
   background-color: #fff;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.04);
 }
+// Set color to white
+.inverse {
+  color: #fff;
+}
+// Set to bold words
+.strong {
+  font-weight: bold;
+}
+// This set background NavBar
+#topoComponent {
+  background-color: #2980b9;
+}
+// This is gradient background
+#HeaderPainel {
+  background: linear-gradient(to right, #2980b9ed , #74b9ff);
+}

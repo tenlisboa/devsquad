@@ -10000,3 +10000,20 @@ a.text-dark:focus {
           box-shadow: 0 2px 4px rgba(0, 0, 0, 0.04);
 }
 
+.inverse {
+  color: #fff;
+}
+
+.strong {
+  font-weight: bold;
+}
+
+#topoComponent {
+  background-color: #2980b9;
+}
+
+#HeaderPainel {
+  background: -webkit-gradient(linear, left top, right top, from(#2980b9ed), to(#74b9ff));
+  background: linear-gradient(to right, #2980b9ed, #74b9ff);
+}
+
