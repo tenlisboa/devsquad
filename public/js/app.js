@@ -20454,7 +20454,7 @@ Vue.use(BootstrapVue);
 
 Vue.component('home-component', __webpack_require__(265));
 Vue.component('topo-component', __webpack_require__(268));
-Vue.component('new-task-component', __webpack_require__(271));
+//Vue.component('new-task-component', require('./components/NewTaskComponent.vue'));
 
 var app = new Vue({
   el: '#app'
@@ -64833,11 +64833,149 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
-    mounted: function mounted() {
-        console.log('Component mounted.');
-    }
+    methods: {
+        addTaskTodo: function addTaskTodo() {
+            if (this.new_task_todo != '') {
+                this.todo.push({ name: this.new_task_todo });
+            }
+            this.new_task_todo = '';
+        },
+        addTaskDoing: function addTaskDoing() {
+            if (this.new_task_doing != '') {
+                console.log(this.doing);
+                this.doing.push({ name: this.new_task_doing });
+            }
+            this.new_task_doing = '';
+        },
+        addTaskFinished: function addTaskFinished() {
+            if (this.new_task_finished != '') {
+                this.finished.push({ name: this.new_task_finished });
+            }
+            this.new_task_finished = '';
+        },
+        deleteTask: function deleteTask(task, type, index) {
+            switch (type) {
+                case 'todo':
+                    Vue.delete(this.todo, index);
+                    break;
+                case 'doing':
+                    Vue.delete(this.doing, index);
+                    break;
+                case 'finished':
+                    Vue.delete(this.finished, index);
+                    break;
+                default:
+                    break;
+            }
+        },
+        moveToDo: function moveToDo(task, type, index) {
+            this.deleteTask(task, type, index);
+            this.new_task_todo = task.toString();
+            this.addTaskTodo();
+            this.new_task_todo = '';
+        },
+        moveToDoing: function moveToDoing(task, type, index) {
+            this.deleteTask(task, type, index);
+            this.new_task_doing = task.toString();
+            this.addTaskDoing();
+            this.new_task_doing = '';
+        },
+        moveToFinished: function moveToFinished(task, type, index) {
+            this.deleteTask(task, type, index);
+            this.new_task_finished = task.toString();
+            this.addTaskFinished();
+            this.new_task_finished = '';
+        }
+
+    },
+    data: function data() {
+        return {
+            todo: [{ name: 'UM' }, { name: 'DOIS' }, { name: 'TRES' }, { name: 'QUATRO' }],
+            doing: [],
+            finished: [],
+            new_task_todo: '',
+            new_task_doing: '',
+            new_task_finished: ''
+        };
+    },
+    props: ['nameTask', 'typeTask']
 });
 
 /***/ }),
@@ -64855,24 +64993,328 @@ var render = function() {
           _vm._m(0),
           _vm._v(" "),
           _c("div", { staticClass: "card-body" }, [
-            _c(
-              "div",
-              { staticClass: "row" },
-              [
-                _c("new-task-component", {
-                  attrs: { typeTask: "todo", nameTask: "A fazer!" }
-                }),
-                _vm._v(" "),
-                _c("new-task-component", {
-                  attrs: { typeTask: "doing", nameTask: "Fazendo!" }
-                }),
-                _vm._v(" "),
-                _c("new-task-component", {
-                  attrs: { typeTask: "finished", nameTask: "Finalizado!" }
-                })
-              ],
-              1
-            )
+            _c("div", { staticClass: "row" }, [
+              _c("div", { staticClass: "col-sm-4" }, [
+                _c("div", { staticClass: "card card-success" }, [
+                  _c(
+                    "div",
+                    { staticClass: "card-header", attrs: { id: "name-task" } },
+                    [
+                      _vm._v(
+                        "\n                                    A fazer!\n                                "
+                      )
+                    ]
+                  ),
+                  _vm._v(" "),
+                  _c("div", { staticClass: "card-body" }, [
+                    _c("div", { staticClass: "list-group" }, [
+                      _c("div", { staticClass: "list-group-item wrapper" }, [
+                        _c("input", {
+                          directives: [
+                            {
+                              name: "model",
+                              rawName: "v-model",
+                              value: _vm.new_task_todo,
+                              expression: "new_task_todo"
+                            }
+                          ],
+                          staticClass: "form-control",
+                          attrs: { placeholder: "Adicionar nova tarefa..." },
+                          domProps: { value: _vm.new_task_todo },
+                          on: {
+                            input: function($event) {
+                              if ($event.target.composing) {
+                                return
+                              }
+                              _vm.new_task_todo = $event.target.value
+                            }
+                          }
+                        }),
+                        _vm._v(
+                          "\n                                             \n                                            "
+                        ),
+                        _c(
+                          "button",
+                          {
+                            staticClass: "btn btn button-add",
+                            on: {
+                              click: function($event) {
+                                _vm.addTaskTodo()
+                              }
+                            }
+                          },
+                          [_c("i", { staticClass: "fa fa-plus inverse" })]
+                        )
+                      ]),
+                      _vm._v(" "),
+                      _c("div", { staticClass: "list-group-item wrapper" }, [
+                        _c(
+                          "ul",
+                          { staticClass: "list-group " },
+                          _vm._l(_vm.todo, function(task, index) {
+                            return _c(
+                              "li",
+                              {
+                                key: task.name,
+                                staticClass:
+                                  "list-group-item align-horizontal task"
+                              },
+                              [
+                                _c("label", { staticClass: "label-task" }, [
+                                  _vm._v(_vm._s(task.name))
+                                ]),
+                                _vm._v(" "),
+                                _c(
+                                  "button",
+                                  {
+                                    staticClass: "btn btn",
+                                    staticStyle: { float: "right" },
+                                    on: {
+                                      click: function($event) {
+                                        _vm.moveToDoing(
+                                          task.name,
+                                          "todo",
+                                          index
+                                        )
+                                      }
+                                    }
+                                  },
+                                  [
+                                    _c("i", {
+                                      staticClass: "fas fa-angle-right"
+                                    })
+                                  ]
+                                )
+                              ]
+                            )
+                          })
+                        )
+                      ])
+                    ])
+                  ])
+                ])
+              ]),
+              _vm._v(" "),
+              _c("div", { staticClass: "col-sm-4" }, [
+                _c("div", { staticClass: "card card-success" }, [
+                  _c(
+                    "div",
+                    { staticClass: "card-header", attrs: { id: "name-task" } },
+                    [
+                      _vm._v(
+                        "\n                                    Fazendo!\n                                "
+                      )
+                    ]
+                  ),
+                  _vm._v(" "),
+                  _c("div", { staticClass: "card-body" }, [
+                    _c("div", { staticClass: "list-group" }, [
+                      _c("div", { staticClass: "list-group-item wrapper" }, [
+                        _c("input", {
+                          directives: [
+                            {
+                              name: "model",
+                              rawName: "v-model",
+                              value: _vm.new_task_doing,
+                              expression: "new_task_doing"
+                            }
+                          ],
+                          staticClass: "form-control",
+                          attrs: { placeholder: "Adicionar nova tarefa..." },
+                          domProps: { value: _vm.new_task_doing },
+                          on: {
+                            input: function($event) {
+                              if ($event.target.composing) {
+                                return
+                              }
+                              _vm.new_task_doing = $event.target.value
+                            }
+                          }
+                        }),
+                        _vm._v(
+                          "\n                                             \n                                            "
+                        ),
+                        _c(
+                          "button",
+                          {
+                            staticClass: "btn btn button-add",
+                            on: {
+                              click: function($event) {
+                                _vm.addTaskDoing()
+                              }
+                            }
+                          },
+                          [_c("i", { staticClass: "fa fa-plus inverse" })]
+                        )
+                      ]),
+                      _vm._v(" "),
+                      _c("div", { staticClass: "list-group-item wrapper" }, [
+                        _c(
+                          "ul",
+                          { staticClass: "list-group " },
+                          _vm._l(_vm.doing, function(task, index) {
+                            return _c(
+                              "li",
+                              {
+                                key: task.name,
+                                staticClass:
+                                  "list-group-item align-horizontal task"
+                              },
+                              [
+                                _c(
+                                  "button",
+                                  {
+                                    staticClass: "btn btn",
+                                    staticStyle: { float: "left" },
+                                    on: {
+                                      click: function($event) {
+                                        _vm.moveToDo(task.name, "doing", index)
+                                      }
+                                    }
+                                  },
+                                  [
+                                    _c("i", {
+                                      staticClass: "fas fa-angle-left"
+                                    })
+                                  ]
+                                ),
+                                _vm._v(" "),
+                                _c("label", { staticClass: "label-task" }, [
+                                  _vm._v(_vm._s(task.name))
+                                ]),
+                                _vm._v(" "),
+                                _c(
+                                  "button",
+                                  {
+                                    staticClass: "btn btn",
+                                    staticStyle: { float: "right" },
+                                    on: {
+                                      click: function($event) {
+                                        _vm.moveToFinished(
+                                          task.name,
+                                          "doing",
+                                          index
+                                        )
+                                      }
+                                    }
+                                  },
+                                  [
+                                    _c("i", {
+                                      staticClass: "fas fa-angle-right"
+                                    })
+                                  ]
+                                )
+                              ]
+                            )
+                          })
+                        )
+                      ])
+                    ])
+                  ])
+                ])
+              ]),
+              _vm._v(" "),
+              _c("div", { staticClass: "col-sm-4" }, [
+                _c("div", { staticClass: "card card-success" }, [
+                  _c(
+                    "div",
+                    { staticClass: "card-header", attrs: { id: "name-task" } },
+                    [
+                      _vm._v(
+                        "\n                                    Finalizado!\n                                "
+                      )
+                    ]
+                  ),
+                  _vm._v(" "),
+                  _c("div", { staticClass: "card-body" }, [
+                    _c("div", { staticClass: "list-group" }, [
+                      _c("div", { staticClass: "list-group-item wrapper" }, [
+                        _c("input", {
+                          directives: [
+                            {
+                              name: "model",
+                              rawName: "v-model",
+                              value: _vm.new_task_finished,
+                              expression: "new_task_finished"
+                            }
+                          ],
+                          staticClass: "form-control",
+                          attrs: { placeholder: "Adicionar nova tarefa..." },
+                          domProps: { value: _vm.new_task_finished },
+                          on: {
+                            input: function($event) {
+                              if ($event.target.composing) {
+                                return
+                              }
+                              _vm.new_task_finished = $event.target.value
+                            }
+                          }
+                        }),
+                        _vm._v(
+                          "\n                                             \n                                            "
+                        ),
+                        _c(
+                          "button",
+                          {
+                            staticClass: "btn btn button-add",
+                            on: {
+                              click: function($event) {
+                                _vm.addTaskFinished()
+                              }
+                            }
+                          },
+                          [_c("i", { staticClass: "fa fa-plus inverse" })]
+                        )
+                      ]),
+                      _vm._v(" "),
+                      _c("div", { staticClass: "list-group-item wrapper" }, [
+                        _c(
+                          "ul",
+                          { staticClass: "list-group " },
+                          _vm._l(_vm.finished, function(task, index) {
+                            return _c(
+                              "li",
+                              {
+                                key: task.name,
+                                staticClass:
+                                  "list-group-item align-horizontal task"
+                              },
+                              [
+                                _c(
+                                  "button",
+                                  {
+                                    staticClass: "btn btn",
+                                    staticStyle: { float: "left" },
+                                    on: {
+                                      click: function($event) {
+                                        _vm.moveToDoing(
+                                          task.name,
+                                          "finished",
+                                          index
+                                        )
+                                      }
+                                    }
+                                  },
+                                  [
+                                    _c("i", {
+                                      staticClass: "fas fa-angle-left"
+                                    })
+                                  ]
+                                ),
+                                _vm._v(" "),
+                                _c("label", { staticClass: "label-task" }, [
+                                  _vm._v(_vm._s(task.name))
+                                ])
+                              ]
+                            )
+                          })
+                        )
+                      ])
+                    ])
+                  ])
+                ])
+              ])
+            ])
           ])
         ])
       ])
@@ -65063,325 +65505,9 @@ if (false) {
 }
 
 /***/ }),
-/* 271 */
-/***/ (function(module, exports, __webpack_require__) {
-
-var disposed = false
-var normalizeComponent = __webpack_require__(42)
-/* script */
-var __vue_script__ = __webpack_require__(272)
-/* template */
-var __vue_template__ = __webpack_require__(273)
-/* template functional */
-var __vue_template_functional__ = false
-/* styles */
-var __vue_styles__ = null
-/* scopeId */
-var __vue_scopeId__ = null
-/* moduleIdentifier (server only) */
-var __vue_module_identifier__ = null
-var Component = normalizeComponent(
-  __vue_script__,
-  __vue_template__,
-  __vue_template_functional__,
-  __vue_styles__,
-  __vue_scopeId__,
-  __vue_module_identifier__
-)
-Component.options.__file = "resources/assets/js/components/NewTaskComponent.vue"
-
-/* hot reload */
-if (false) {(function () {
-  var hotAPI = require("vue-hot-reload-api")
-  hotAPI.install(require("vue"), false)
-  if (!hotAPI.compatible) return
-  module.hot.accept()
-  if (!module.hot.data) {
-    hotAPI.createRecord("data-v-41e4b522", Component.options)
-  } else {
-    hotAPI.reload("data-v-41e4b522", Component.options)
-  }
-  module.hot.dispose(function (data) {
-    disposed = true
-  })
-})()}
-
-module.exports = Component.exports
-
-
-/***/ }),
-/* 272 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-
-/* harmony default export */ __webpack_exports__["default"] = ({
-    methods: {
-        addTask: function addTask(typeTask) {
-            if (this.new_task != '') {
-
-                if (typeTask == 'doing') {
-                    this.doing.push({ name: this.new_task });
-                } else if (typeTask == 'finished') {
-                    this.finished.push({ name: this.new_task });
-                } else if (typeTask == 'todo') {
-                    this.todo.push({ name: this.new_task });
-                }
-
-                this.new_task = '';
-            }
-        },
-        TodoToDoing: function TodoToDoing(name) {
-            this.new_task = name;
-            alert(this.new_task);
-            this.addTask('finished');
-            /*this.todo = this.todo.filter( function(task) {
-                if(task.name != name) {
-                    return task;
-                }
-            })*/
-        },
-        deleteDoing: function deleteDoing(name) {},
-        deleteFinished: function deleteFinished(name) {}
-
-    },
-    data: function data() {
-        return {
-            todo: [{ name: 'Correr1' }, { name: 'Correr2' }, { name: 'Correr3' }, { name: 'Correr4' }, { name: 'Correr5' }],
-            doing: [{ name: 'Nadar' }],
-            finished: [{ name: 'Andar' }],
-            new_task: '',
-            id_task_selected: ''
-        };
-    },
-    props: ['nameTask', 'typeTask']
-});
-
-/***/ }),
-/* 273 */
-/***/ (function(module, exports, __webpack_require__) {
-
-var render = function() {
-  var _vm = this
-  var _h = _vm.$createElement
-  var _c = _vm._self._c || _h
-  return _c("div", { staticClass: "col-sm-4" }, [
-    _c("div", { staticClass: "card card-success" }, [
-      _c("div", { staticClass: "card-header", attrs: { id: "name-task" } }, [
-        _vm._v("\n            " + _vm._s(_vm.nameTask) + "\n        ")
-      ]),
-      _vm._v(" "),
-      _c("div", { staticClass: "card-body" }, [
-        _c("div", { staticClass: "list-group" }, [
-          _c("div", { staticClass: "list-group-item wrapper" }, [
-            _c("input", {
-              directives: [
-                {
-                  name: "model",
-                  rawName: "v-model",
-                  value: _vm.new_task,
-                  expression: "new_task"
-                }
-              ],
-              staticClass: "form-control",
-              attrs: { placeholder: "Adicionar nova tarefa..." },
-              domProps: { value: _vm.new_task },
-              on: {
-                input: function($event) {
-                  if ($event.target.composing) {
-                    return
-                  }
-                  _vm.new_task = $event.target.value
-                }
-              }
-            }),
-            _vm._v("\n                     \n                    "),
-            _c(
-              "button",
-              {
-                staticClass: "btn btn button-add",
-                on: {
-                  click: function($event) {
-                    _vm.addTask(_vm.typeTask)
-                  }
-                }
-              },
-              [_c("i", { staticClass: "fa fa-plus inverse" })]
-            )
-          ]),
-          _vm._v(" "),
-          _c("div", { staticClass: "list-group-item wrapper" }, [
-            _c(
-              "ul",
-              { staticClass: "list-group " },
-              [
-                _vm._l(_vm.todo, function(task) {
-                  return _vm.typeTask == "todo"
-                    ? _c(
-                        "li",
-                        {
-                          staticClass: "list-group-item align-horizontal task"
-                        },
-                        [
-                          _c("label", { staticClass: "label-task" }, [
-                            _vm._v(_vm._s(task.name))
-                          ]),
-                          _vm._v(" "),
-                          _c(
-                            "button",
-                            {
-                              staticClass: "btn btn",
-                              staticStyle: { float: "right" },
-                              on: {
-                                click: function($event) {
-                                  _vm.TodoToDoing(task.name)
-                                }
-                              }
-                            },
-                            [_c("i", { staticClass: "fas fa-angle-right" })]
-                          )
-                        ]
-                      )
-                    : _vm._e()
-                }),
-                _vm._v(" "),
-                _vm._l(_vm.doing, function(task) {
-                  return _vm.typeTask == "doing"
-                    ? _c(
-                        "li",
-                        {
-                          staticClass: "list-group-item align-horizontal task"
-                        },
-                        [
-                          _vm._m(0, true),
-                          _vm._v(" "),
-                          _c("label", { staticClass: "label-task" }, [
-                            _vm._v(_vm._s(task.name))
-                          ]),
-                          _vm._v(" "),
-                          _vm._m(1, true)
-                        ]
-                      )
-                    : _vm._e()
-                }),
-                _vm._v(" "),
-                _c("modal-actions-component", {
-                  attrs: { idModel: "modal_move_doing" }
-                }),
-                _vm._v(" "),
-                _vm._l(_vm.finished, function(task) {
-                  return _vm.typeTask == "finished"
-                    ? _c(
-                        "li",
-                        {
-                          staticClass: "list-group-item align-horizontal task"
-                        },
-                        [
-                          _vm._m(2, true),
-                          _vm._v(" "),
-                          _c("label", { staticClass: "label-task" }, [
-                            _vm._v(_vm._s(task.name))
-                          ])
-                        ]
-                      )
-                    : _vm._e()
-                }),
-                _vm._v(" "),
-                _c("modal-actions-component", {
-                  attrs: { idModal: "modal_move_finished" }
-                })
-              ],
-              2
-            )
-          ])
-        ])
-      ])
-    ])
-  ])
-}
-var staticRenderFns = [
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c(
-      "button",
-      { staticClass: "btn btn", staticStyle: { float: "left" } },
-      [_c("i", { staticClass: "fas fa-angle-left" })]
-    )
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c(
-      "button",
-      { staticClass: "btn btn", staticStyle: { float: "right" } },
-      [_c("i", { staticClass: "fas fa-angle-right" })]
-    )
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c(
-      "button",
-      { staticClass: "btn btn", staticStyle: { float: "left" } },
-      [_c("i", { staticClass: "fas fa-angle-left" })]
-    )
-  }
-]
-render._withStripped = true
-module.exports = { render: render, staticRenderFns: staticRenderFns }
-if (false) {
-  module.hot.accept()
-  if (module.hot.data) {
-    require("vue-hot-reload-api")      .rerender("data-v-41e4b522", module.exports)
-  }
-}
-
-/***/ }),
+/* 271 */,
+/* 272 */,
+/* 273 */,
 /* 274 */
 /***/ (function(module, exports) {
 
