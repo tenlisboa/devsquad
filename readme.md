@@ -1,2 +1,2 @@
 ## Link for access of the DEMO:
-  teamdevsquad.devlisb.ga
+  http://teamdevsquad.devlisb.ga
