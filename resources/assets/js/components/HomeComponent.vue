@@ -24,7 +24,7 @@
                                             <div class="list-group-item wrapper" >
                                                 <ul class="list-group ">
                                                     <li v-for="(task, index) in todo" :key="task.name" class="list-group-item align-horizontal task">  
-                                                        <label class="label-task">{{ task.name }}</label>
+                                                        <label v-on:click="comfirmDelete(task.name, 'todo', index)" class="label-task">{{ task.name }}</label>
                                                         <button v-on:click="moveToDoing(task.name, 'todo', index)" class="btn btn" style="float: right"><i class="fas fa-angle-right"></i></button>             
                                                     </li>
                                                 </ul>
@@ -51,7 +51,7 @@
                                                 <ul class="list-group ">
                                                     <li v-for="(task, index) in doing" :key="task.name" class="list-group-item align-horizontal task">  
                                                         <button v-on:click="moveToDo(task.name, 'doing', index)" class="btn btn" style="float: left"><i class="fas fa-angle-left"></i></button>             
-                                                        <label class="label-task">{{ task.name }}</label>
+                                                        <label v-on:click="comfirmDelete(task.name, 'doing', index)" class="label-task">{{ task.name }}</label>
                                                         <button v-on:click="moveToFinished(task.name, 'doing', index)" class="btn btn" style="float: right"><i class="fas fa-angle-right"></i></button>             
                                                     </li>
                                                 </ul>
@@ -78,7 +78,7 @@
                                                 <ul class="list-group ">
                                                     <li v-for="(task, index) in finished" :key="task.name" class="list-group-item align-horizontal task">  
                                                         <button v-on:click="moveToDoing(task.name, 'finished', index)" class="btn btn" style="float: left"><i class="fas fa-angle-left"></i></button>             
-                                                        <label class="label-task">{{ task.name }}</label>
+                                                        <label v-on:click="comfirmDelete(task.name, 'finished', index)" class="label-task">{{ task.name }}</label>
                                                     </li>
                                                 </ul>
                                             </div>
@@ -105,7 +105,6 @@
             },
             addTaskDoing: function() {
                 if(this.new_task_doing != ''){
-                    console.log(this.doing)
                     this.doing.push({name: this.new_task_doing});
                 }
                 this.new_task_doing = '';     
@@ -149,6 +148,23 @@
                 this.addTaskFinished();
                 this.new_task_finished = '';
             },
+            comfirmDelete: function(task, type, index) {
+                swal({
+                    title: "Tem certeza que deseja finalizar esta tarefa?",
+                    text: "Esta ação não poderá ser desfeita posteriormente!",
+                    icon: "warning",
+                    buttons: true,
+                    dangerMode: true,
+                })
+                .then((willDelete) => {
+                    if (willDelete) {
+                        this.deleteTask(task, type, index);
+                        swal("Tarefa concluida com sucesso.", {
+                            icon: "success",
+                        });
+                    }
+                });
+            }
 
         },
         data: function() {

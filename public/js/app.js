@@ -64919,7 +64919,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         },
         addTaskDoing: function addTaskDoing() {
             if (this.new_task_doing != '') {
-                console.log(this.doing);
                 this.doing.push({ name: this.new_task_doing });
             }
             this.new_task_doing = '';
@@ -64962,6 +64961,24 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             this.new_task_finished = task.toString();
             this.addTaskFinished();
             this.new_task_finished = '';
+        },
+        comfirmDelete: function comfirmDelete(task, type, index) {
+            var _this = this;
+
+            swal({
+                title: "Tem certeza que deseja finalizar esta tarefa?",
+                text: "Esta ação não poderá ser desfeita posteriormente!",
+                icon: "warning",
+                buttons: true,
+                dangerMode: true
+            }).then(function (willDelete) {
+                if (willDelete) {
+                    _this.deleteTask(task, type, index);
+                    swal("Tarefa concluida com sucesso.", {
+                        icon: "success"
+                    });
+                }
+            });
         }
 
     },
@@ -65060,9 +65077,22 @@ var render = function() {
                                   "list-group-item align-horizontal task"
                               },
                               [
-                                _c("label", { staticClass: "label-task" }, [
-                                  _vm._v(_vm._s(task.name))
-                                ]),
+                                _c(
+                                  "label",
+                                  {
+                                    staticClass: "label-task",
+                                    on: {
+                                      click: function($event) {
+                                        _vm.comfirmDelete(
+                                          task.name,
+                                          "todo",
+                                          index
+                                        )
+                                      }
+                                    }
+                                  },
+                                  [_vm._v(_vm._s(task.name))]
+                                ),
                                 _vm._v(" "),
                                 _c(
                                   "button",
@@ -65179,9 +65209,22 @@ var render = function() {
                                   ]
                                 ),
                                 _vm._v(" "),
-                                _c("label", { staticClass: "label-task" }, [
-                                  _vm._v(_vm._s(task.name))
-                                ]),
+                                _c(
+                                  "label",
+                                  {
+                                    staticClass: "label-task",
+                                    on: {
+                                      click: function($event) {
+                                        _vm.comfirmDelete(
+                                          task.name,
+                                          "doing",
+                                          index
+                                        )
+                                      }
+                                    }
+                                  },
+                                  [_vm._v(_vm._s(task.name))]
+                                ),
                                 _vm._v(" "),
                                 _c(
                                   "button",
@@ -65302,9 +65345,22 @@ var render = function() {
                                   ]
                                 ),
                                 _vm._v(" "),
-                                _c("label", { staticClass: "label-task" }, [
-                                  _vm._v(_vm._s(task.name))
-                                ])
+                                _c(
+                                  "label",
+                                  {
+                                    staticClass: "label-task",
+                                    on: {
+                                      click: function($event) {
+                                        _vm.comfirmDelete(
+                                          task.name,
+                                          "finished",
+                                          index
+                                        )
+                                      }
+                                    }
+                                  },
+                                  [_vm._v(_vm._s(task.name))]
+                                )
                               ]
                             )
                           })
