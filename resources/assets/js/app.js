@@ -19,7 +19,7 @@ Vue.use(BootstrapVue);
 
 Vue.component('home-component', require('./components/HomeComponent.vue'));
 Vue.component('topo-component', require('./components/TopoComponent.vue'));
-Vue.component('new-task-component', require('./components/NewTaskComponent.vue'));
+//Vue.component('new-task-component', require('./components/NewTaskComponent.vue'));
 
 const app = new Vue({
     el: '#app'
