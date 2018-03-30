@@ -1,6 +1,5 @@
 @extends('layouts.app')
 
 @section('content')
-<home-component >
-</home-component>
+<home-component v-bind:dados="{{ $data_sets }}"></home-component>
 @endsection
