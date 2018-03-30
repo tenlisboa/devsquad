@@ -29,8 +29,8 @@
         <topo-component titulo="{{ config('app.name', 'Trello') }}" url="{{ url('/') }}" >
             <!-- Authentication Links -->
             @guest
-                <li><a class="nav-link" href="{{ route('login') }}">{{ __('Login') }}</a></li>
-                <li><a class="nav-link" href="{{ route('register') }}">{{ __('Register') }}</a></li>
+                <li><a class="nav-link" href="{{ route('login') }}"><span class="inverse" style="float: right">{{ __('Login') }}</span></a></li>
+                <li><a class="nav-link" href="{{ route('register') }}"><span class="inverse" style="float: left">{{ __('Register') }}</span></a></li>
             @else
                 <li class="nav-item dropdown">
                     <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
