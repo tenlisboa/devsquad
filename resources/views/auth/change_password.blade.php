@@ -5,30 +5,28 @@
     <div class="row justify-content-center">
         <div class="col-md-8">
             <div class="card">
-                <div class="card-header">{{ __('Reinicie sua senha') }}</div>
+                <div class="card-header">{{ __('Mudar senha') }}</div>
 
                 <div class="card-body">
-                    <form method="POST" action="{{ route('password.request') }}">
+                    <form method="POST" action="{{ url('change/password') }}">
                         @csrf
 
-                        <input type="hidden" name="token" value="{{ $token }}">
-
                         <div class="form-group row">
-                            <label for="email" class="col-md-4 col-form-label text-md-right">{{ __('Seu E-Mail') }}</label>
+                            <label for="password" class="col-md-4 col-form-label text-md-right">{{ __('Senha atual') }}</label>
 
                             <div class="col-md-6">
-                                <input id="email" type="email" class="form-control{{ $errors->has('email') ? ' is-invalid' : '' }}" name="email" value="{{ $email ?? old('email') }}" required autofocus>
+                                <input id="password" type="password" class="form-control{{ $errors->has('passwordold') ? ' is-invalid' : '' }}" name="passwordold" required>
 
-                                @if ($errors->has('email'))
+                                @if ($errors->has('passwordold'))
                                     <span class="invalid-feedback">
-                                        <strong>{{ $errors->first('email') }}</strong>
+                                        <strong>{{ $errors->first('passwordold') }}</strong>
                                     </span>
                                 @endif
                             </div>
                         </div>
 
                         <div class="form-group row">
-                            <label for="password" class="col-md-4 col-form-label text-md-right">{{ __('Sua senha') }}</label>
+                            <label for="password" class="col-md-4 col-form-label text-md-right">{{ __('Nova senha') }}</label>
 
                             <div class="col-md-6">
                                 <input id="password" type="password" class="form-control{{ $errors->has('password') ? ' is-invalid' : '' }}" name="password" required>
@@ -42,23 +40,17 @@
                         </div>
 
                         <div class="form-group row">
-                            <label for="password-confirm" class="col-md-4 col-form-label text-md-right">{{ __('Confirme sua senha') }}</label>
+                            <label for="password-confirm" class="col-md-4 col-form-label text-md-right">{{ __('Confirma senha') }}</label>
 
                             <div class="col-md-6">
-                                <input id="password-confirm" type="password" class="form-control{{ $errors->has('password_confirmation') ? ' is-invalid' : '' }}" name="password_confirmation" required>
-
-                                @if ($errors->has('password_confirmation'))
-                                    <span class="invalid-feedback">
-                                        <strong>{{ $errors->first('password_confirmation') }}</strong>
-                                    </span>
-                                @endif
+                                <input id="password-confirm" type="password" class="form-control" name="password_confirmation" required>
                             </div>
                         </div>
 
                         <div class="form-group row mb-0">
                             <div class="col-md-6 offset-md-4">
                                 <button type="submit" class="btn btn-primary">
-                                    {{ __('Resetar senha') }}
+                                    {{ __('Salvar') }}
                                 </button>
                             </div>
                         </div>
@@ -68,4 +60,23 @@
         </div>
     </div>
 </div>
+
+@if (session('success'))
+<script>
+    function senhaAlteradaSucesso() {
+        swal("Feito!", "{{session('success')}}", "success");
+    } 
+    senhaAlteradaSucesso();
+</script>
+@endif
+
+@if (session('error'))
+<script>
+    function senhaAlteradaError() {
+        swal("Error", "{{session('error')}}", "error");
+    } 
+    senhaAlteradaError();
+</script>
+@endif
+
 @endsection

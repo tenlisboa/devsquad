@@ -1,12 +1,15 @@
 <?php
 
-    var_dump($_POST);
+    header("Access-Control-Allow-Origin: *");
+    header("Access-Control-Allow-Headers: *");
 
     $service = $_POST["service"];
     $idUser = $_POST["id_user"];
     $task_name = $_POST["task_name"];
     $type_task = $_POST["type_task"];
 
+
+    var_dump($_POST);
 
     switch($service) {
         case 'add_task':
