@@ -98,6 +98,7 @@
     export default {
 
         mounted() {
+            console.log(this.dados)
 
             this.todo = this.dados.task_todo;
             this.doing = this.dados.task_doing;
@@ -130,9 +131,9 @@
                 data.append('task_name', task_name);
                 data.append('type_task', type_task);
 
-                axios.post('http://localhost:1234/api', data)
+                axios.post('http://teamdevsquad.devlisb.ga:5020/api', data)
                     .then( function(res) {
-                        //console.log(res);
+                        console.log(res);
                     })
                     .catch( function(err) {
                         //console.log(err);
